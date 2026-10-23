@@ -1,14 +1,20 @@
 import { createGetUrl } from 'fumadocs-core/source';
 
-export const appName = 'My App';
+export const appName = 'KeiMaid';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';
 
+export const siteFooter = {
+  copyrightOwner: 'CC-BY-SA-4.0 Licensed｜© 2025-2026 KeiMaidDev',
+  icp: '苏ICP备2026012452号-1',
+  icpUrl: 'https://beian.miit.gov.cn/',
+};
+
 // fill this with your actual GitHub info, for example:
 export const gitConfig = {
-  user: 'fuma-nama',
-  repo: 'fumadocs',
+  user: 'KeiMaidDev',
+  repo: 'KeiMaidDocs',
   branch: 'main',
 };
 
