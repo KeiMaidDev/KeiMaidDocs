@@ -1,0 +1,6 @@
+# Local-only Afdian developer API credentials. Do not commit values.
+# Production: wrangler secret put AFDIAN_USER_ID
+# Production: wrangler secret put AFDIAN_API_TOKEN
+NEXTJS_ENV=development
+AFDIAN_USER_ID=
+AFDIAN_API_TOKEN=
