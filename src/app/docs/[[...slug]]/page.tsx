@@ -12,7 +12,31 @@ import { getMDXComponents } from '@/components/mdx';
 import { Lightbox } from '@/components/image-zoom';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { getGithubLastEdit } from 'fumadocs-core/content/github';
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
+
+async function getLastModified(path: string) {
+  try {
+    return await getGithubLastEdit({
+      owner: gitConfig.user,
+      repo: gitConfig.repo,
+      path: `content/docs/${path}`,
+      sha: gitConfig.branch,
+      token: process.env.GIT_TOKEN ? `Bearer ${process.env.GIT_TOKEN}` : undefined,
+    });
+  } catch {
+    return null;
+  }
+}
+
+function formatLastModified(date: Date) {
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Shanghai',
+  });
+}
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -21,6 +45,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
+  const lastModified = await getLastModified(page.path);
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
@@ -43,6 +68,12 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           />
         </Lightbox>
       </DocsBody>
+      {lastModified ? (
+        <p className="mt-8 text-sm text-fd-muted-foreground">
+          最后修改于{' '}
+          <time dateTime={lastModified.toISOString()}>{formatLastModified(lastModified)}</time>
+        </p>
+      ) : null}
     </DocsPage>
   );
 }
