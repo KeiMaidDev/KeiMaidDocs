@@ -10,3 +10,15 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+:root {
+  --vp-card-bg: rgba(101, 117, 133, 0.12);
+  --vp-card-bg-hover: rgba(101, 117, 133, 0.18);
+  --vp-card-shadow: rgba(0, 0, 0, 0.15);
+}
+
+.dark {
+  --vp-card-bg: rgba(142, 150, 170, 0.1);
+  --vp-card-bg-hover: rgba(142, 150, 170, 0.16);
+  --vp-card-shadow: rgba(0, 0, 0, 0.3);
+}
