@@ -1,0 +1,111 @@
+---
+title: Markdown 风格指南
+---
+
+<Callout title="提示" type="idea">
+  推荐使用 Visual Studio Code 插件，例如 [Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) 或 [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) 来统一风格并检查语法
+</Callout>
+
+## 标题风格
+
+----
+
+### 使用 ATX 风格的标题（1～6 个 # 号）
+
+```tsx
+一级标题 // [!code --]
+======= // [!code --]
+
+# 一级标题 // [!code ++]
+## 二级标题 // [!code ++]
+### 三级标题 // [!code ++]
+#### 四级标题 // [!code ++]
+```
+----
+
+### 最后一个 # 后空一格，标题前后空一行
+
+```jsx
+##一个标题 // [!code --]
+段落内容…… // [!code --]
+
+前一个段落的内容…… // [!code ++]
++ // [!code ++]
+## 一个标题 // [!code ++]
++ // [!code ++]
+下一个段落…… // [!code ++]
+```
+----
+
+### 一篇文章中只应有一个一级标题
+
+```tsx
+# 一个一级标题 // [!code --]
+- // [!code --]
+## 第一个二级标题 // [!code --]
+- // [!code --]
+Blahblah…… // [!code --]
+- // [!code --]
+# 又一个一级标题 // [!code --]
+- // [!code --]
+Blahblah…… // [!code --]
+
+# 一个一级标题 // [!code ++]
++ // [!code ++]
+## 第一个二级标题 // [!code ++]
++ // [!code ++]
+Blahblah…… // [!code ++]
++ // [!code ++]
+## 第二个二级标题 // [!code ++]
++ // [!code ++]
+Blahblah…… // [!code ++]
+```
+----
+
+## 段落风格
+----
+
+### 段落开头顶格
+
+```tsx
+  这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code --]
+- // [!code --]
+  这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code --]
+- // [!code --]
+  This is the third paragraph. This is the third paragraph. This is the third paragraph. This is the third paragraph. // [!code --]
+
+这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code ++]
++ // [!code ++]
+这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code ++]
++ // [!code ++]
+This is the third paragraph. This is the third paragraph. This is the third paragraph. This is the third paragraph. // [!code ++]
+```
+----
+
+### 段落和其它块级元素间空一行
+
+```tsx
+## 一个标题 // [!code --]
+这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code --]
+- foo // [!code --]
+- bar // [!code --]
+这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code --]
+> 一块引用内容 // [!code --]
+
+## 一个标题 // [!code ++]
++ // [!code ++]
+这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code ++]
++ // [!code ++]
+- foo // [!code ++]
+- bar // [!code ++]
++ // [!code ++]
+这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code ++]
++ // [!code ++]
+> 一块引用内容 // [!code ++]
+```
+
+----
+
+## 参考资料
+
+- https://stdrc.cc/style-guides/markdown

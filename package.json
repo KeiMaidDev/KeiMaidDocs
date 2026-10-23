@@ -1,0 +1,41 @@
+{
+  "name": "keimaiddocs",
+  "version": "0.0.50",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
+    "types:check": "next typegen && tsc --noEmit",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+  },
+  "dependencies": {
+    "@fuma-translate/react": "^1.0.2",
+    "@opennextjs/cloudflare": "^1.20.13",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.5.0",
+    "fumadocs-core": "16.17.7",
+    "fumadocs-mdx": "15.4.9",
+    "fumadocs-ui": "npm:@fumadocs/base-ui@16.17.7",
+    "lucide-react": "^1.59.0",
+    "next": "16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-medium-image-zoom": "^5.4.9",
+    "takumi-js": "^2.17.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/mdx": "^2.0.14",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.151.3"
+  }
+}
