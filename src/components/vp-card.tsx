@@ -83,7 +83,7 @@ export function VPCard({
     <>
       {resolvedIcon ? (
         <img
-          className="me-[1em] size-[3em] shrink-0 rounded-full object-cover"
+          className="my-0! me-[1em] size-[3em] shrink-0 rounded-full object-cover"
           src={resolvedIcon}
           alt=""
           width={48}
@@ -94,10 +94,10 @@ export function VPCard({
         />
       ) : null}
       <div className="min-w-0 flex-1">
-        <div className="text-[1.1em] font-medium">{title}</div>
+        <div className="text-[1.1em] font-medium leading-[1.25]">{title}</div>
         {hasContent(resolvedDescription) ? (
           <>
-            <hr className="my-[.25em]" />
+            <hr className="my-[.25em]!" />
             <div className="text-[.9em] leading-[1.5] text-[#888]">{resolvedDescription}</div>
           </>
         ) : null}
