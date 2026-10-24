@@ -2,110 +2,402 @@
 title: Markdown 风格指南
 ---
 
-<Callout title="提示" type="idea">
-  推荐使用 Visual Studio Code 插件，例如 [Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) 或 [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) 来统一风格并检查语法
+import { Building, HomeIcon, Rocket } from 'lucide-react';
+
+## MDX
+
+我们推荐使用 MDX。它是在 Markdown 基础上扩展了 JSX 语法的超集，允许你导入组件并在文档中使用，甚至可以直接编写 JavaScript。
+
+参见：
+
+- [MDX 语法](https://mdxjs.com/docs/what-is-mdx/#mdx-syntax)。
+- 同时支持 GFM（GitHub Flavored Markdown，GitHub 风格 Markdown），参见 [GFM 规范](https://github.github.com/gfm)。
+
+```mdx noCopy
+import { Component } from './component';
+
+<Component name="Hello" />
+
+## 标题
+
+### 二级标题
+
+#### 三级标题
+
+你好，世界，**粗体**，_斜体_，~~隐藏~~
+
+1. 第一项
+2. 第二项
+3. 第三项
+
+- 项目 1
+- 项目 2
+
+> 此处引用
+
+![替代文本](/image.png)
+
+| 表格 | 说明 |
+| ---- | ---- |
+| 你好 | 世界 |
+```
+
+### Frontmatter
+
+支持基于 YAML 的 frontmatter，其中 `title` 表示页面标题（`h1`）。
+
+```mdx
+---
+title: 这是一篇文档
+---
+
+...
+```
+
+因此，在编写 Markdown/MDX 时通常不使用一级标题（`# 标题`），除非你为页面标题渲染编写了自定义逻辑。
+
+### 自动链接
+
+内部链接使用 React 框架的 `<Link />` 组件（例如 `next/link`），以支持预取并避免整页重新加载。
+
+出于安全考虑，外部链接会自动添加 `rel="noreferrer noopener" target="_blank"` 属性。
+
+```mdx
+[我的链接](https://github.github.com/gfm)
+
+这样也可以：https://github.github.com/gfm。
+```
+
+### 卡片
+
+适合用于添加链接。
+
+```mdx
+import { HomeIcon } from 'lucide-react';
+
+<Cards>
+  <Card
+    href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating"
+    title="获取、缓存和重新验证"
+  >
+    了解 Next.js 中缓存的更多内容
+  </Card>
+  <Card title="href 可选">了解 Next.js 中 `fetch` 的更多内容。</Card>
+  <Card icon={<HomeIcon />} href="/" title="首页">
+    也可以添加图标。
+  </Card>
+</Cards>
+```
+
+<Cards>
+  <Card
+    href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating"
+    title="获取、缓存和重新验证"
+  >
+    了解 Next.js 中缓存的更多内容
+  </Card>
+  <Card title="href 可选">了解 Next.js 中 `fetch` 的更多内容。</Card>
+  <Card icon={<HomeIcon />} href="/" title="首页">
+    也可以添加图标。
+  </Card>
+</Cards>
+
+### 提示框
+
+适合用于添加提示或警告，默认已包含。你可以指定提示框的类型：
+
+- `info`（默认）
+- `warn`/`warning`
+- `error`
+- `success`
+- `idea`
+
+```mdx
+<Callout>你好，世界</Callout>
+
+<Callout title="标题" type="warn">
+  你好，世界
 </Callout>
 
-## 标题风格
+<Callout title="标题" type="error">
+  你好，世界
+</Callout>
 
-----
+<Callout title="标题" type="idea">
+  你好，世界
+</Callout>
+```
 
-### 使用 ATX 风格的标题（1～6 个 # 号）
+<Callout>你好，世界</Callout>
 
+<Callout title="标题" type="warn">
+  你好，世界
+</Callout>
+
+<Callout title="标题" type="error">
+  你好，世界
+</Callout>
+
+<Callout title="标题" type="idea">
+  你好，世界
+</Callout>
+
+### 标题
+
+每个标题都会自动生成锚点，并清理空格等无效字符。（例如，`Hello World` 会转换为 `hello-world`）
+
+```md
+# 你好 `World`
+```
+
+#### 目录设置
+
+目录（TOC）会根据标题自动生成，你也可以自定义标题在目录中的显示效果：
+
+```md
+# 标题 [!toc]
+
+此标题将不会显示在目录中。
+
+# 另一个标题 [toc]
+
+此标题**仅**会在目录中显示，你可以用它添加额外的目录项。
+就像在 React 组件中渲染的标题：
+
+<MyComp />
+```
+
+#### 自定义锚点
+
+你可以通过添加 `[#slug]` 来自定义标题锚点。
+
+```md
+# 标题 [#my-heading-id]
+```
+
+也可以与目录设置组合使用，例如：
+
+```md
+# 标题 [toc] [#my-heading-id]
+```
+
+若要让人直接跳转到某个标题，请在链接的哈希片段中加入该标题的 ID：`/page#my-heading-id`。
+
+### 代码块
+
+默认使用 [Rehype Code](https://www.fumadocs.dev/docs/headless/mdx/rehype-code) 提供语法高亮。
+
+````mdx
+```js
+console.log('Hello World');
+```
+
+```js title="我的标题"
+console.log('Hello World');
+```
+````
+
+#### 行号
+
+显示行号，也可与 Twoslash 及其他转换器配合使用。
+
+````mdx tab="输入"
+```ts twoslash lineNumbers
+const a = 'Hello World';
+//    ^?
+console.log(a); // [!code highlight]
+```
+````
+
+```ts twoslash lineNumbers tab="输出"
+const a = 'Hello World';
+//    ^?
+console.log(a); // [!code highlight]
+```
+
+还可以设置行号的起始值。
+
+````mdx tab="输入"
+```js lineNumbers=4
+function main() {
+  console.log('starts from 4');
+
+  return 0;
+}
+```
+````
+
+```js lineNumbers=4 tab="输出"
+function main() {
+  console.log('starts from 4');
+
+  return 0;
+}
+```
+
+#### Shiki 转换器
+
+支持部分 [Shiki 转换器](https://shiki.style/packages/transformers)，可用于高亮或设置特定行的样式。
+
+````md tab="输入"
 ```tsx
-一级标题 // [!code --]
-======= // [!code --]
+// 高亮一行
+<div>Hello World</div> // [\!code highlight]
 
-# 一级标题 // [!code ++]
-## 二级标题 // [!code ++]
-### 三级标题 // [!code ++]
-#### 四级标题 // [!code ++]
+// 高亮一个单词
+// [\!code word:Fumadocs]
+<div>Fumadocs</div>
+
+// 差异样式
+console.log('hewwo'); // [\!code --]
+console.log('hello'); // [\!code ++]
+
+// 聚焦
+return new ResizeObserver(() => {}) // [\!code focus]
 ```
-----
+````
 
-### 最后一个 # 后空一格，标题前后空一行
+```tsx tab="输出"
+// 高亮一行
+<div>Hello World</div> // [!code highlight]
 
-```jsx
-##一个标题 // [!code --]
-段落内容…… // [!code --]
+// 高亮一个单词
+// [!code word:Fumadocs]
+<div>Fumadocs</div>
 
-前一个段落的内容…… // [!code ++]
-+ // [!code ++]
-## 一个标题 // [!code ++]
-+ // [!code ++]
-下一个段落…… // [!code ++]
-```
-----
+// 差异样式：
+console.log('hewwo'); // [!code --]
+console.log('hello'); // [!code ++]
 
-### 一篇文章中只应有一个一级标题
-
-```tsx
-# 一个一级标题 // [!code --]
-- // [!code --]
-## 第一个二级标题 // [!code --]
-- // [!code --]
-Blahblah…… // [!code --]
-- // [!code --]
-# 又一个一级标题 // [!code --]
-- // [!code --]
-Blahblah…… // [!code --]
-
-# 一个一级标题 // [!code ++]
-+ // [!code ++]
-## 第一个二级标题 // [!code ++]
-+ // [!code ++]
-Blahblah…… // [!code ++]
-+ // [!code ++]
-## 第二个二级标题 // [!code ++]
-+ // [!code ++]
-Blahblah…… // [!code ++]
-```
-----
-
-## 段落风格
-----
-
-### 段落开头顶格
-
-```tsx
-  这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code --]
-- // [!code --]
-  这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code --]
-- // [!code --]
-  This is the third paragraph. This is the third paragraph. This is the third paragraph. This is the third paragraph. // [!code --]
-
-这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code ++]
-+ // [!code ++]
-这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code ++]
-+ // [!code ++]
-This is the third paragraph. This is the third paragraph. This is the third paragraph. This is the third paragraph. // [!code ++]
-```
-----
-
-### 段落和其它块级元素间空一行
-
-```tsx
-## 一个标题 // [!code --]
-这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code --]
-- foo // [!code --]
-- bar // [!code --]
-这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code --]
-> 一块引用内容 // [!code --]
-
-## 一个标题 // [!code ++]
-+ // [!code ++]
-这是一个段落。这是一个段落。这是一个段落。这是一个段落。 // [!code ++]
-+ // [!code ++]
-- foo // [!code ++]
-- bar // [!code ++]
-+ // [!code ++]
-这是第二个段落。这是第二个段落。这是第二个段落。这是第二个段落。 // [!code ++]
-+ // [!code ++]
-> 一块引用内容 // [!code ++]
+// 聚焦
+return new ResizeObserver(() => {}) // [!code focus]
 ```
 
-----
+#### 标签页组
+
+````mdx
+```ts tab="标签页 1"
+console.log('A');
+```
+
+```ts tab="标签页 2"
+console.log('B');
+```
+````
+
+```ts tab="标签页 1"
+console.log('A');
+```
+
+```ts tab="标签页 2"
+console.log('B');
+```
+
+如需添加持久化 ID，请在第一个代码块中定义 `tab-group`：
+
+````mdx
+```ts tab="标签页 1" tab-group="my-custom-group"
+console.log('A');
+```
+
+```ts tab="标签页 2"
+console.log('B');
+```
+````
+
+```ts tab="标签页 1" tab-group="my-custom-group"
+console.log('A');
+```
+
+```ts tab="标签页 2"
+console.log('B');
+```
+
+另一组：
+
+```ts tab="标签页 1" tab-group="my-custom-group"
+console.log('A');
+```
+
+```ts tab="标签页 2"
+console.log('B');
+```
+
+#### 在标签页组中使用 MDX
+
+你可以在标签页标题值中使用 MDX：
+
+```ts tab="Fumadocs MDX" title="source.config.ts"
+import { defineConfig } from 'fumadocs-mdx/config';
+
+export default defineConfig({
+  mdxOptions: {
+    remarkCodeTabOptions: {
+      parseMdx: true, // [!code ++]
+    },
+  },
+});
+```
+
+```ts tab="MDX 编译器"
+import { compile } from '@mdx-js/mdx';
+import { remarkCodeTab } from 'fumadocs-core/mdx-plugins';
+
+await compile('...', {
+  remarkPlugins: [
+    [
+      remarkCodeTab,
+      {
+        parseMdx: true, // [!code ++]
+      },
+    ],
+  ],
+});
+```
+
+````mdx
+```ts tab="<Building /> 标签页 1"
+console.log('A');
+```
+
+```ts tab="<Rocket /> 标签页 2"
+console.log('B');
+```
+````
+
+```ts tab="<Building /> 标签页 1"
+console.log('A');
+```
+
+```ts tab="<Rocket /> 标签页 2"
+console.log('B');
+```
+
+### 引入
+
+引用另一个文件（也可以是 Markdown/MDX 文档）。
+在 `<include>` 标签中指定目标文件路径（相对于当前 MDX 文件）。
+
+```mdx title="page.mdx"
+<include>./another.mdx</include>
+```
+
+### NPM 命令
+
+适合为不同包管理器生成安装命令。
+
+````md tab="输入"
+```npm
+npm i next -D
+```
+````
+
+```npm tab="输出"
+npm i next -D
+```
+
+详情请参阅 [`remark-npm`](https://www.fumadocs.dev/docs/headless/mdx/remark-npm)。
 
 ## 参考资料
 
-- https://stdrc.cc/style-guides/markdown
+- [Fumadocs](https://www.fumadocs.dev/docs/markdown#include)

@@ -1,5 +1,6 @@
 // 人工登记的非爱发电赞助者昵称。
-export const manualSponsorNames: readonly string[] = [];
+export const manualSponsorNames: readonly string[] = [
+];
 
 export function normalizeSponsorNames(...sources: ReadonlyArray<readonly string[]>) {
   const names: string[] = [];

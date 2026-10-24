@@ -48,7 +48,7 @@ export default function HomePage() {
           <div className="text-center">
             <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">
               <span className="bg-gradient-to-b from-fd-primary to-fd-primary/50 bg-clip-text text-transparent">
-                Kei_Maid
+                KeiMaid
               </span>
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg text-fd-muted-foreground sm:text-xl">
