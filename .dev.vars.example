@@ -4,3 +4,11 @@
 NEXTJS_ENV=development
 AFDIAN_USER_ID=
 AFDIAN_API_TOKEN=
+
+# Public base URL for the externally hosted maimai resource JSON and WebP files.
+# Expected paths:
+#   ${base}/data/maimai/icon.json
+#   ${base}/data/maimai/plate.json
+#   ${base}/maimai/icon/{id}.webp
+#   ${base}/maimai/plate/{id}.webp
+NEXT_PUBLIC_MAIMAI_CDN_BASE_URL=https://cdn.example.com

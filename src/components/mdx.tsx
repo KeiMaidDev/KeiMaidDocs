@@ -3,12 +3,14 @@ import type { MDXComponents } from 'mdx/types';
 import { ImageZoom } from './image-zoom';
 import { VPCard } from './vp-card';
 import { SponsorList } from './sponsor-list';
+import { MaimaiResourceBrowser } from './maimai-resource-browser';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
     img: (props) => <ImageZoom {...(props as any)} />,
     ImageZoom,
+    MaimaiResourceBrowser,
     VPCard,
     SponsorList,
     ...components,
