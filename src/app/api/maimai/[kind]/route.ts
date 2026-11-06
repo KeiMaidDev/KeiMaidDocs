@@ -37,7 +37,10 @@ export async function GET(
     }
 
     const resources = parseMaimaiResources(await response.json());
-    return NextResponse.json(resources, {
+    return NextResponse.json({
+      resources,
+      imageBaseUrl: baseUrl,
+    }, {
       headers: {
         'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
       },

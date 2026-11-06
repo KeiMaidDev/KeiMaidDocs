@@ -27,8 +27,6 @@ import {
 const PAGE_SIZE = 100;
 const TOOLTIP_WIDTH = 320;
 
-const publicCdnBaseUrl = normalizeCdnBaseUrl(process.env.NEXT_PUBLIC_MAIMAI_CDN_BASE_URL);
-
 interface MaimaiResourceBrowserProps {
   kind: MaimaiResourceKind;
 }
@@ -212,6 +210,7 @@ export function MaimaiResourceBrowser({ kind }: MaimaiResourceBrowserProps) {
   const cardAspectRatio = isIcon ? '1 / 1' : '720 / 116';
 
   const [resources, setResources] = useState<MaimaiResource[]>([]);
+  const [imageBaseUrl, setImageBaseUrl] = useState<string | null>(null);
   const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [errorMessage, setErrorMessage] = useState('');
   const [retryCount, setRetryCount] = useState(0);
@@ -267,6 +266,7 @@ export function MaimaiResourceBrowser({ kind }: MaimaiResourceBrowserProps) {
     const controller = new AbortController();
     setLoadState('loading');
     setErrorMessage('');
+    setImageBaseUrl(null);
 
     void (async () => {
       try {
@@ -284,7 +284,25 @@ export function MaimaiResourceBrowser({ kind }: MaimaiResourceBrowserProps) {
           throw new Error(message);
         }
 
-        setResources(parseMaimaiResources(payload));
+        const responsePayload =
+          payload && typeof payload === 'object' && !Array.isArray(payload)
+            ? payload
+            : null;
+        const resourcesPayload =
+          responsePayload && 'resources' in responsePayload
+            ? responsePayload.resources
+            : null;
+        const responseBaseUrl =
+          responsePayload && 'imageBaseUrl' in responsePayload
+            ? normalizeCdnBaseUrl(String(responsePayload.imageBaseUrl))
+            : null;
+
+        if (!responseBaseUrl) {
+          throw new Error('服务端未返回图片 CDN 配置');
+        }
+
+        setImageBaseUrl(responseBaseUrl);
+        setResources(parseMaimaiResources(resourcesPayload));
         setLoadState('ready');
       } catch (error) {
         if (controller.signal.aborted) return;
@@ -574,9 +592,9 @@ export function MaimaiResourceBrowser({ kind }: MaimaiResourceBrowserProps) {
                   className="relative block overflow-hidden rounded-[5px] bg-fd-muted"
                   style={{ aspectRatio: cardAspectRatio }}
                 >
-                  {publicCdnBaseUrl ? (
+                  {imageBaseUrl ? (
                     <img
-                      src={maimaiImageUrl(publicCdnBaseUrl, kind, resource.id)}
+                      src={maimaiImageUrl(imageBaseUrl, kind, resource.id)}
                       alt={resource.name}
                       loading="lazy"
                       decoding="async"
