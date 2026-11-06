@@ -2,6 +2,8 @@
 # Production: wrangler secret put AFDIAN_USER_ID
 # Production: wrangler secret put AFDIAN_API_TOKEN
 NEXTJS_ENV=development
+# EdgeOne Makers 环境设为 edgeone；本地 Cloudflare 开发可留空
+# DEPLOY_TARGET=edgeone
 AFDIAN_USER_ID=
 AFDIAN_API_TOKEN=
 

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "opennextjs-cloudflare build",
+    "build:next": "next build",
     "dev": "next dev",
     "start": "next start",
     "types:check": "next typegen && tsc --noEmit",

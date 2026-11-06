@@ -1,4 +1,3 @@
-import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { createHash } from 'node:crypto';
 import { unstable_cache } from 'next/cache';
 
@@ -48,7 +47,10 @@ export function createAfdianSign(token: string, params: string, ts: number, user
 }
 
 async function getCloudflareEnv() {
+  if (process.env.DEPLOY_TARGET === 'edgeone') return undefined;
+
   try {
+    const { getCloudflareContext } = await import('@opennextjs/cloudflare');
     const { env } = await getCloudflareContext({ async: true });
     return env;
   } catch {

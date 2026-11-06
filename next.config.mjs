@@ -41,4 +41,6 @@ const config = {
 
 export default withMDX(config);
 
-import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());
+if (process.env.NODE_ENV === 'development' && process.env.DEPLOY_TARGET !== 'edgeone') {
+  import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());
+}
