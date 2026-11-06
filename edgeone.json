@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm build:next",
+  "buildCommand": "pnpm build:edgeone",
   "installCommand": "pnpm install --frozen-lockfile",
   "outputDirectory": ".next",
   "nodeVersion": "22.17.1",
