@@ -1,6 +1,8 @@
 {
   "title": "舞萌查分",
   "pages": [
+    "index",
+    "combo",
     "icons",
     "plates"
   ]
