@@ -598,6 +598,7 @@ export function MaimaiResourceBrowser({ kind }: MaimaiResourceBrowserProps) {
                       alt={resource.name}
                       loading="lazy"
                       decoding="async"
+                      referrerPolicy="origin"
                       draggable={false}
                       className="size-full object-cover transition-[filter] duration-200 group-hover:brightness-[0.62] group-focus-visible:brightness-[0.62]"
                     />

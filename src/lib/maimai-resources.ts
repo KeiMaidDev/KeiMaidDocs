@@ -31,6 +31,23 @@ export function normalizeCdnBaseUrl(value: string | undefined) {
   }
 }
 
+export function getRequestOrigin(request: Request) {
+  const requestUrl = new URL(request.url);
+  const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
+  const forwardedProto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim();
+  const host = forwardedHost || request.headers.get('host') || requestUrl.host;
+  const protocol =
+    forwardedProto === 'http' || forwardedProto === 'https'
+      ? forwardedProto
+      : requestUrl.protocol.replace(':', '');
+
+  try {
+    return new URL(`${protocol}://${host}`).origin;
+  } catch {
+    return requestUrl.origin;
+  }
+}
+
 export function maimaiDataUrl(baseUrl: string, kind: MaimaiResourceKind) {
   return new URL(`data/maimai/${kind}.json`, `${baseUrl}/`).toString();
 }

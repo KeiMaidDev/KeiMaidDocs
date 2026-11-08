@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import {
+  getRequestOrigin,
   isMaimaiResourceKind,
   maimaiDataUrl,
   normalizeCdnBaseUrl,
@@ -9,7 +10,7 @@ import {
 export const dynamic = 'force-dynamic';
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ kind: string }> },
 ) {
   const { kind } = await params;
@@ -28,7 +29,10 @@ export async function GET(
   try {
     const response = await fetch(maimaiDataUrl(baseUrl, kind), {
       cache: 'no-store',
-      headers: { accept: 'application/json' },
+      headers: {
+        accept: 'application/json',
+        referer: `${getRequestOrigin(request)}/`,
+      },
       signal: AbortSignal.timeout(15_000),
     });
 
