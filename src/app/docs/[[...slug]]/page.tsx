@@ -12,22 +12,7 @@ import { getMDXComponents } from '@/components/mdx';
 import { Lightbox } from '@/components/image-zoom';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { getGithubLastEdit } from 'fumadocs-core/content/github';
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
-
-async function getLastModified(path: string) {
-  try {
-    return await getGithubLastEdit({
-      owner: gitConfig.user,
-      repo: gitConfig.repo,
-      path: `content/docs/${path}`,
-      sha: gitConfig.branch,
-      token: process.env.GIT_TOKEN ? `Bearer ${process.env.GIT_TOKEN}` : undefined,
-    });
-  } catch {
-    return null;
-  }
-}
 
 function formatLastModified(date: Date) {
   return date.toLocaleDateString('zh-CN', {
@@ -45,7 +30,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
-  const lastModified = await getLastModified(page.path);
+  const lastModified = page.data.lastModified;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>

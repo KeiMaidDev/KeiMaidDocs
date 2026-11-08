@@ -1,6 +1,8 @@
 import { defineConfig } from 'fumadocs-mdx/config';
+import lastModified from 'fumadocs-mdx/plugins/last-modified';
 
 export default defineConfig({
+  plugins: [lastModified()],
   mdxOptions: {
     remarkCodeTabOptions: {
       parseMdx: true,
